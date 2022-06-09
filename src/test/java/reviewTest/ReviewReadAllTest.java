@@ -1,4 +1,4 @@
-package bookTest;
+package reviewTest;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,13 +15,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
-import pages.Book;
+import pages.Review;
 
-public class BookFindByIdTest {
-	
+public class ReviewReadAllTest {
+
 	private static WebDriver driver;
-	private Book book;
-
+	private Review review;
 	
 	@BeforeClass
 	public static void init() {
@@ -33,24 +32,22 @@ public class BookFindByIdTest {
 	
 	@Before
 	public void setup() {
-		driver.get(Book.getUrl());
-		this.book = PageFactory.initElements(driver, Book.class);
+		driver.get(Review.getUrl());
+		this.review = PageFactory.initElements(driver, Review.class);
 	}
 	
 
 	
 	@Test
-	public void FindByIdTest() throws InterruptedException {
-		book.create("Cool Title", "Nice Descriptipn", "Some Smart Dude");
-		book.findById("1");
-		
+	public void readAllTest() throws InterruptedException {
+		review.create("john", "doe", "it was a good read","1");
+		review.readAll();
 		Thread.sleep(2000);
-		List<WebElement> rowsBefore = driver.findElements(By.xpath("//*[@id=\"table_body_book\"]/tr"));
+		List<WebElement> rowsBefore = driver.findElements(By.xpath("//*[@id=\"table_body_review\"]/tr"));
 		int rowsLen = rowsBefore.size();
 		
-		assertTrue(rowsLen==1);	
+		assertTrue(rowsLen>0);
 	}
-	
 	
 	
     @After
@@ -60,4 +57,3 @@ public class BookFindByIdTest {
 		
 
 }
-
