@@ -40,7 +40,7 @@ public class BookFindByAuthorTest {
 
 	
 	@Test
-	public void FindByAuthor() throws InterruptedException {
+	public void FindByAuthorTest() throws InterruptedException {
 		book.create("Cool Title", "Nice Descriptipn", "Some Smart Dude");
 		driver.navigate().refresh();
 		book.findByAuthor("Some Smart Dude");

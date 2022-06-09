@@ -1,4 +1,4 @@
-package bookTest;
+package reviewTest;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,12 +15,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
-import pages.Book;
+import pages.Review;
 
-public class CreateBookTest {
-	
+public class DeleteReviewTest {
+
 	private static WebDriver driver;
-	private Book book;
+	private Review review;
 	
 	@BeforeClass
 	public static void init() {
@@ -32,34 +32,37 @@ public class CreateBookTest {
 	
 	@Before
 	public void setup() {
-		driver.get(Book.getUrl());
-		this.book = PageFactory.initElements(driver, Book.class);
+		driver.get(Review.getUrl());
+		this.review = PageFactory.initElements(driver, Review.class);
 	}
-	
-	
+		
 	
 	@Test
-	public void createTest() throws InterruptedException {
-		book.readAll();
+	public void deleteTest() throws InterruptedException {
+		review.create("john", "doe", "it was a good read","1");
+		review.create("john", "doe", "it was a good read","1");
+		review.readAll();
 		
 		Thread.sleep(2000);
-		List<WebElement> rowsBefore = driver.findElements(By.xpath("//*[@id=\"table_body_book\"]/tr"));
+		
+		List<WebElement> rowsBefore = driver.findElements(By.xpath("//*[@id=\"table_body_review\"]/tr"));
 		int rowsLenBefore = rowsBefore.size();
 		
-		book.create("Cool Title", "Nice Descriptipn", "Some Smart Dude");
+		
+		driver.navigate().refresh();
+		review.delete("2");
 		
 		Thread.sleep(2000);
-		book.readAll();
-		
+		review.readAll();
 		Thread.sleep(2000);
-		List<WebElement> rowsAfter = driver.findElements(By.xpath("//*[@id=\"table_body_book\"]/tr"));
+		List<WebElement> rowsAfter = driver.findElements(By.xpath("//*[@id=\"table_body_review\"]/tr"));
 		int rowsLenAfter = rowsAfter.size();
 		
-		boolean added = rowsLenAfter > rowsLenBefore;
 		
-		assertTrue(added);	
+		boolean added = rowsLenAfter < rowsLenBefore;
+		
+		assertTrue(added);		
 	}
-	
 	
     @After
     public void tearDown() {
